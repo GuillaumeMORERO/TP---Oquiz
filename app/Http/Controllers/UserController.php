@@ -56,34 +56,62 @@ class UserController extends Controller
     }
     public function signupRec(Request $request)
     {
-        dump($request->getMethod());
-        dump($request);
-        dump($request->password, $request->password_verification);
+        // dump($request->getMethod());
+        // dump($request);
+        // dump($request->password, $request->password_verification);
         // yes!! it works !!
 
-        if ($request->getMethod() === 'POST') {
+        $firstname = $request->input('firstname');
+        $lastname = $request->input('lastname');
+        $email = $request->input('email');
+        $password = $request->input('password');
+        $passwordCheck = $request->input('password_verification');
 
-            if ($request->password === $request->password_verification) {
-    
-                $firstname = $request->input('firstname');
-                $lastname = $request->input('lastname');
-                $email = $request->input('email');
-                $password = $request->input('password');
-    
-                $user = new User();
-                $user->firstname = $firstname;
-                $user->lastname = $lastname;
-                $user->email = $email;
-                $user->password = password_hash($password, PASSWORD_DEFAULT);
-    
-                $user->save();
-    
-                return redirect()->route('home');
-            }
+        // On initialise une varibale $errors comme un tableau vide
+        $errors = [];
+        
+        $newUser = new User();
 
+        if (empty($firstname) == false && empty($lastname) == false) {
+            $newUser->firstname = $firstname;
+            $newUser->lastname = $lastname;
+        } else {
+            $errors[] = 'Le nom d\'utilisateur est vide';
         }
 
+        if (
+            filter_var($email, FILTER_VALIDATE_EMAIL) !== false &&
+            User::where('email', $email)->count() == 0
+            // Autre solution avec ->doesntExist() qui rtourne true au lieu ->count()
+        ) {
+            $newUser->email = $email;
+        } else {
+            $errors[] = 'Ce courriel n\'est pas correct';
+        }
+
+          // On vérifie que les deux mots de passe sont identiques avant de l'ajouter hashé
+          if ($password == $passwordCheck && empty(trim($password)) == false) {
+            $passwordHashed = password_hash($password, PASSWORD_BCRYPT);
+            $newUser->password = $passwordHashed;
+        } else {
+            $errors[] = 'Les mots de passe doivent être identiques et non vides';
+        }
+
+        if (count($errors) > 0) {
+            return view('signup', [
+                'errors' => $errors,
+                'username' => $username,
+                'email' => $email
+            ]);
+        }
+
+        $newUser->save();
+
+        return redirect()->route('home');
+            
     }
+
+    
 
     public function signout()
     {

@@ -16,39 +16,38 @@
             </a>
         </li>
 
-        <li>
         <?php if ($isUserConnected) { ?>
-                <a href="<?= route('profile') ?>">
-                    <i></i>
-                    Mon compte
-                </a>
+        <li>
 
-            <?php } ?>
+            <a href="<?= route('profile') ?>">
+                <i></i>
+                Mon compte
+            </a>
+        </li>
+        <li>
+            <a href="<?= route('signout') ?>">
+                <i></i>
+                Déconnexion
+            </a>
+        </li>
+            <?php } else { ?>
+
+        <li>
+            <a href="<?= route('signin') ?>">
+            <i></i>
+            Connexion
+            </a>
         </li>
 
         <li>
             <a href="<?= route('signup') ?>">
-                <i></i>
-                Inscription
+            <i></i>
+            Inscription
             </a>
         </li>
-        
 
-        <li>
-            <?php if ($isUserConnected) { ?>
-                <a href="<?= route('signout') ?>">
-                    <i></i>
-                    Déconnexion
-                </a>
+        <?php } ?>
 
-            <?php } else { ?>
-                <a href="<?= route('signin') ?>">
-                    <i></i>
-                    Connexion
-                </a>
-
-            <?php } ?>
-        </li>
     </ul>
 </nav>
 

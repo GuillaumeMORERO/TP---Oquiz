@@ -1,6 +1,7 @@
 <?php
 $pageTitle = 'Inscription';
 include(__DIR__.'/layout/header.php');
+dump($errors)
 ?>
 <div>
     <h2> Bienvenue sur O'Quiz </h2>
@@ -26,4 +27,18 @@ include(__DIR__.'/layout/header.php');
         <button>S'inscrire</button>
     </form>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <?php include(__DIR__.'/layout/footer.php'); ?>

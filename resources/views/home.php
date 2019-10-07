@@ -18,6 +18,7 @@ include(__DIR__.'/layout/header.php');
 // Elle sera incrémentée à chaque tour de boucle pour permettre de scinder les lignes de questions
 $i = 1;
 foreach ($quizzes as $quiz) {
+    // dump($quiz->author->firstname )
     ?>
     <div class="col-3 card">
         <h3>
@@ -26,7 +27,7 @@ foreach ($quizzes as $quiz) {
             </a>
         </h3>
         <h5><?= $quiz->description ?></h5>
-        <p>by author name</p>
+        <p><?= $quiz->author->firstname ?> <?= $quiz->author->lastname ?></p>
     </div>
     <?php
     if ($i % 3 == 0) {

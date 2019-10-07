@@ -11,6 +11,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     protected $table = 'app_users';
 
+    //crée une propriété permettant de facilement accéder aux quiz créés par ce user
+    public function createdQuizzes()
+    {
+        return $this->hasMany("App\Models\Quiz");
+    }
+
     /**
      * The attributes that are mass assignable.
      *
