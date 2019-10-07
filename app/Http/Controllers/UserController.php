@@ -20,6 +20,11 @@ class UserController extends Controller
         //
     }
 
+    public function profile()
+    {
+        return view('profile');
+    }
+
     public function signinForm()
     {
         return view('signin-form');
@@ -30,7 +35,7 @@ class UserController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
         // On s'en sert pour récupérer l'utilisateur qui a cet email
-        $user = User::where('email', $email)->get();
+        $user = User::where('email', $email)->first();
         // Il manque un bout ici. on devrait vérifier si $user est null au cas où y'aurait pas de résultat
         // On vérifie maintenant que le mot de passe est bon
         if (password_verify($password, $user->password)) {
@@ -78,5 +83,14 @@ class UserController extends Controller
 
         }
 
+    }
+
+    public function signout()
+    {
+        // On demande la déconnexion
+        // La méthode s'occupe d'enlever les informations sur l'utilisateur dans $_SESSION
+        UserSession::disconnect();
+        // On redirige l'utilisateur sur la page d'accueil
+        return redirect()->route('home');
     }
 }

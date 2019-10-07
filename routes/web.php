@@ -18,6 +18,10 @@ $router->get('/quiz/{id}', [
     'as' => 'quiz_show', 'uses' => 'QuizController@quiz'
 ]);
 
+$router->get('/profile', [
+    'as' => 'profile', 'uses' => 'UserController@profile'
+]);
+
 // Page d'inscription
 $router->get('/signup', [
     'as' => 'signup', 'uses' => 'UserController@signupForm'
@@ -33,4 +37,9 @@ $router->get('/signin', [
 ]);
 $router->post('/signin-check', [
     'as' => 'signin_post', 'uses' => 'UserController@signinCheck'
+]);
+
+
+$router->get('/signout', [
+    'as' => 'signout', 'uses' => 'UserController@signout'
 ]);
