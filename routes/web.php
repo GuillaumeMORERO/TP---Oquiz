@@ -17,6 +17,9 @@ $router->get('/', [
 $router->get('/quiz/{id}', [
     'as' => 'quiz_show', 'uses' => 'QuizController@quiz'
 ]);
+$router->post('/quiz/{id}', [
+    "as" => "quizPost", "uses" => "QuizController@quizPost"
+]); 
 
 $router->get('/profile', [
     'as' => 'profile', 'uses' => 'UserController@profile'

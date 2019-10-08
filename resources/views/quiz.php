@@ -16,11 +16,13 @@ include(__DIR__.'/layout/header.php');
 </div>
 
 <div>
-    <p>by author name</p>
+    <p><?= $quiz->author->firstname." ".$quiz->author->lastname ?></p>
 </div>
 
+<h2><?= isset($score) ? 'Score : '.$score : ''?></h2>
+
 <div>
-    Liste des Thèmes : 
+    Thème : 
     <ul>
     <?php foreach($quiz->tags as $tag) {  ?> 
         <li><?= $tag->name ?></li>
@@ -28,35 +30,44 @@ include(__DIR__.'/layout/header.php');
     </ul>
 </div>
 
+
 <div class="row">
-<?php
-$i = 1;
-foreach($quiz->questions as $question) {
-    ?>
+<form action="<?= route('quizPost', ['id' => $quiz->id]) ?>" method="post">
+    <?php foreach($quiz->questions as $question): ?>  
+
         <div class="col question">
-            <span class="level level--<?= $question->level->getCssName() ?>">
-                <?= $question->level->name ?></span>
+            
+            <span class="level level--"> <?= $question->level->name ?> </span>
 
             <div class="question__question">
-                <?= $question->question ?>
+                <?= $question->question ?> 
             </div>
             <div>
-                <ol class="answers-list">
-                    <?php
-                    foreach ($question->answers as $answer) {
-                        echo '<li>'.$answer->description.'</li>';
-                    }
-                    ?>
-                </ol> 
+                <p><?= $question->anecdote ?></p> 
             </div>
-        </div>
-    <?php
-    if ($i % 3 == 0) {
-        ?></div><div class="row"><?php
-    }
-    $i++;
-}
-?>
-    
+
+            <div class="question__choices">
+                <!-- récupérer les answers pour la question voulu et itérer-->
+
+
+                <?php foreach ($question->answers as $answer) : ?>
+                    <div>
+                        <input type="radio" name="<?= $question->id ?>" id="<?= 'reponse'. $answer->id ?>" value="<?= $answer->id ?>">
+                        <label for="<?= 'reponse'. $answer->id ?>">
+                            <?= $answer->description ?> 
+                        </label> 
+                    </div>
+                <?php endforeach ?>
+                
+            </div>
+        </div> 
+        <?php endforeach; ?> 
+        
+    <div>
+        <input class="btn" type="submit" value="OK"/>
+    </div>
+</form>
 </div>
+    
+
 <?php include(__DIR__.'/layout/footer.php'); ?>

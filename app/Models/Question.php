@@ -3,6 +3,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 class Question extends Model
 {
+    protected $table = 'questions';
+    
     // On n'est dans l'obligation de de spécifier la relation inverse mais on le fait quand même ici
     // C'est plus propre, le jour où on a besoin d'afficher un Quiz à partir de la Question, on sera bien content d'avoir déja codé la relation
     public function quiz()
