@@ -23,4 +23,8 @@ class Question extends Model
         return $this->hasMany('App\Models\Answer', 'questions_id');
     }
     // Ensuite, il nous faut la bonne réponse !
+    public function rightAnswer ()
+    {
+        return Answer::find($this->answers_id);
+    }
 }

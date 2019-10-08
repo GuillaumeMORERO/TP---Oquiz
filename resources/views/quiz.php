@@ -46,8 +46,17 @@ include(__DIR__.'/layout/header.php');
                 <p><?= $question->anecdote ?></p> 
             </div>
 
+
+             <?php if(isset($score)) : ?>
+                <div class="alert alert-success">
+                    <?= $question->rightAnswer()->description?> 
+                </div>
+            <?php endif ?>
+
+
+
+
             <div class="question__choices">
-                <!-- récupérer les answers pour la question voulu et itérer-->
 
 
                 <?php foreach ($question->answers as $answer) : ?>
